@@ -9,6 +9,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: test
+      MYSQL_HOST: mysql
 
   app:
     build: ./
@@ -18,3 +19,11 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/${MYSQL_DATABASE}
     depends_on:
       - database
+
+  
+  script:
+    - apt-get update && apt-get install -y git curl libmcrypt-dev default-mysql-client
+    - mysql --version
+    - sleep 20
+    - echo "SHOW databases;" | mysql -u root -p"$MYSQL_ROOT_PASSWORD" -h "${MYSQL_HOST}"
+    - echo "Database host is '${MYSQL_HOST}'"
