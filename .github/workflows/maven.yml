@@ -27,5 +27,12 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
+    - name: Build docker-compose stack
+            run: docker-compose -f docker-compose.yml up -d --build
+
+    - name: Check running containers
+            run: docker ps
+
+    - name: Stop containers
+            if: always()
+            run: docker-compose -f docker-compose.yml down
