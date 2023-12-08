@@ -28,14 +28,11 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build docker-compose stack
-        run: |
-          echo ---Building and starting up docker---
-          docker-compose -f docker-compose.yml up -d --build
-          echo ---Containers up---
+            run: docker-compose -f docker-compose.yml up -d --build
 
-          - name: Check running containers
+    - name: Check running containers
             run: docker ps
 
-          - name: Stop containers
+    - name: Stop containers
             if: always()
             run: docker-compose -f docker-compose.yml down
